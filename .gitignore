@@ -88,3 +88,4 @@ docker-data/
 *.pid
 tmp/
 logs/
+frontend/dist/
