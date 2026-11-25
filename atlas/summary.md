@@ -1,18 +1,26 @@
-# Summary – F&O Portfolio Tracker
+# Project Summary – F&O Portfolio Tracker
 
-## Built
-Multi-user app: FastAPI + SQLAlchemy backend (JWT/bcrypt auth, all data user- and FY-scoped), React/TypeScript/Vite frontend (light theme). Pages: Login, Home (holdings, interest, investments, FY selector, growth chart), TradeBook (CSV upload, deduped by trade_id, 15 rows/page), P&L (by expiry, NIFTY/SENSEX), Target (yearly/quarterly/monthly/weekly, 10% of investment, met indicators). Docker Compose with nginx.
+## What was built
+Multi-user web app for tracking F&O trading as a business portfolio.
+- Backend: FastAPI, SQLAlchemy 2, Pydantic 2, JWT auth, bcrypt. SQLite by default, PostgreSQL via `DATABASE_URL`.
+- Frontend: React 18 + TypeScript + Vite, light enterprise theme, Recharts.
+- Pages: Login, Home (manual holdings such as gsec and mutual funds, interest with date, invested value with date, FY dropdown, growth chart), TradeBook (CSV upload, duplicates by `(user_id, trade_id)` skipped, 15 rows per page), P&L (by NIFTY/SENSEX expiry), Target (yearly, quarterly, monthly and weekly cards with a met/not-met indicator; target is 10% of investment per year).
+- Every data endpoint takes a financial-year parameter (Apr–Mar), and every query is scoped by user.
+- Docker Compose runs nginx serving the frontend and the backend.
 
 ## Commands
 - Setup: `python3 -m venv backend/.venv && backend/.venv/bin/python -m pip install -r backend/requirements.txt && (cd frontend && npm install)`
 - Test: `(cd backend && .venv/bin/python -m pytest -q)` and `(cd frontend && npm test -- --run)`
 - Build: `(cd frontend && npm run build)`
-- Run: copy `.env.example` to `.env`, set `JWT_SECRET`, `docker compose up --build`, open http://localhost:8080
+- Run: copy `.env.example` to `.env`, set `JWT_SECRET`, then `docker compose up --build` and open http://localhost:8080.
 
-## Verified this stage
-Backend 83 tests passed; frontend 7 tests passed; frontend build succeeded. Docker Compose and the running app were NOT run/verified. Coverage percentage not measured.
+## Verified in this stage
+- Backend tests: 83 passed.
+- Frontend tests: 7 passed.
+- Frontend build: succeeded.
+- I did not run Docker Compose or start the app, so the containers are unverified.
 
-## Limitations
-- PostgreSQL needs `psycopg[binary]` added manually.
-- Backend tests emit deprecation warnings.
-- No failed backlog tasks.
+## Known limitations
+- PostgreSQL needs `psycopg[binary]` added to requirements.
+- The backend tests emit some warnings, about 40.
+- No backlog tasks are marked failed.
