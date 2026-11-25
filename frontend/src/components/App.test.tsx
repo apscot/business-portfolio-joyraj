@@ -87,6 +87,7 @@ describe("App routing and login", () => {
     const fetchMock = vi.fn(async (url: string) => {
       if (url === "/api/auth/register") return json(201, { access_token: "tok2" });
       if (url === "/api/auth/me") return json(200, { id: 2, email: "new@b.com" });
+      if (url.startsWith("/api/summary")) return json(200, { fy: "2025-26", invested: "0", interest: "0", total: "0", holdings: "0", series: [] });
       return json(200, []);
     });
     vi.stubGlobal("fetch", fetchMock);

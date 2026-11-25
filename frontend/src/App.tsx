@@ -2,20 +2,11 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useAuth } from "./auth";
 import Layout from "./components/Layout";
-import Card from "./components/Card";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
-
-/** Temporary page body; replaced by the real pages in later tasks. */
-function Placeholder({ title }: { title: string }) {
-  return (
-    <>
-      <h1>{title}</h1>
-      <Card>
-        <p className="muted">This page is coming soon.</p>
-      </Card>
-    </>
-  );
-}
+import PnL from "./pages/PnL";
+import Targets from "./pages/Targets";
+import TradeBook from "./pages/TradeBook";
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
@@ -36,10 +27,10 @@ export default function App() {
           </RequireAuth>
         }
       >
-        <Route index element={<Placeholder title="Home" />} />
-        <Route path="trades" element={<Placeholder title="TradeBook" />} />
-        <Route path="pnl" element={<Placeholder title="P&L" />} />
-        <Route path="targets" element={<Placeholder title="Target" />} />
+        <Route index element={<Home />} />
+        <Route path="trades" element={<TradeBook />} />
+        <Route path="pnl" element={<PnL />} />
+        <Route path="targets" element={<Targets />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
